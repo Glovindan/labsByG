@@ -1,11 +1,13 @@
 package com.glovindan;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class JordanTable {
     private double[][] tValues;
     private String[] tRow;
     private String[] tColumn;
+    private int zeroColumnIndex;
 
     JordanTable(double[][] inputValues) {
         this.tValues = new double[inputValues.length][];
@@ -21,6 +23,20 @@ public class JordanTable {
 
         this.tColumn = new String[inputValues.length];
         Arrays.fill(this.tColumn, "0");
+
+        zeroColumnIndex = tRow.length;
+    }
+
+    public static void swapDoubleItems(double[] array, int i, int j) {
+        double temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+
+    public static void swapStringItems(String[] array, int i, int j) {
+        String temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
     }
 
     public double[][] getValues() {
@@ -28,13 +44,14 @@ public class JordanTable {
     }
 
     public String[][] getTableAsStringMatrix() {
-        String[][] tableToString = new String[this.tColumn.length + 1][this.tRow.length + 1];
+        String[][] tableToString = new String[this.tColumn.length + 1][this.zeroColumnIndex + 1];
 
         //0 0
         tableToString[0][0] = " ";
 
         //Значения нулевой строки
-        for (int column = 1; column <= this.tRow.length; column++) {
+        tableToString[0][1] = this.tRow[0];
+        for (int column = 2; column <= this.zeroColumnIndex; column++) {
             tableToString[0][column] = "-" + this.tRow[column - 1];
         }
         //Значения нулевого столбца
@@ -43,7 +60,7 @@ public class JordanTable {
         }
         //Значения таблицы
         for (int row = 1; row <= this.tColumn.length ; row++) {
-            for (int column = 1; column <= this.tRow.length; column++) {
+            for (int column = 1; column <= this.zeroColumnIndex; column++) {
                 tableToString[row][column] = Double.toString(this.tValues[row - 1][column - 1]);
             }
         }
@@ -92,6 +109,13 @@ public class JordanTable {
             }
         }
 
+        if(Objects.equals(tRow[y], "0")) {
+            for (int row = 0; row < tColumn.length; row++) {
+                swapDoubleItems(newTable[row], y, zeroColumnIndex - 1);
+            }
+            swapStringItems(this.tRow, y, zeroColumnIndex - 1);
+            this.zeroColumnIndex--;
+        }
         this.tValues = newTable;
         return true;
     }

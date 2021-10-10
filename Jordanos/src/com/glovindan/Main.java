@@ -1,5 +1,8 @@
 package com.glovindan;
 
+import java.util.Objects;
+import java.util.Scanner;
+
 public class Main {
 
     public static void printDoubleMatrix(double[][] matrix) {
@@ -20,13 +23,10 @@ public class Main {
         }
     }
 
-    public static void makeJordanosShit(JordanTable A, int x, int y) {
-        System.out.println("Old Matrix");
-        printStringMatrix(A.getTableAsStringMatrix());
-
+    public static void makeJordanosShit(String message, JordanTable A, int x, int y) {
         boolean status = A.jordanExclude(x,y);
         if (status) {
-            System.out.println("New Matrix");
+            System.out.println(message);
             printStringMatrix(A.getTableAsStringMatrix());
         } else {
             System.out.println("Ошибка");
@@ -52,15 +52,33 @@ public class Main {
                 {10.0, 1.0, -1.0, -2.0, 3.0}
         };
         JordanTable A = new JordanTable(initMatrix);
-        makeJordanosShit(A, 1, 4);
+        System.out.println("Old Matrix");
+        printStringMatrix(A.getTableAsStringMatrix());
 
-        double[][] secondMatrix = {
-                {1.0, 1.0, 2.0, 3.0},
-                {1.0, 1.0, 1.0, 1.0},
-                {2.0, 1.0, 0.0, -1.0}
-        };
-        JordanTable B = new JordanTable(secondMatrix);
-        makeJordanosShit(B, 2, 1);
-        makeJordanosShit(B, 1, 2);
+        Scanner in = new Scanner(System.in);
+        int stepCounter = 1;
+        int x, y;
+        String endCheck = "";
+        System.out.println(endCheck);
+
+        boolean proceed = true;
+        while(proceed) {
+            System.out.println("Enter Row number: ");
+            x = in.nextInt();
+            System.out.println("Enter Column number: ");
+            y = in.nextInt();
+
+            makeJordanosShit("Step "+stepCounter+":", A, x, y);
+            stepCounter++;
+
+            System.out.println("Continue? Y/N: ");
+            in.nextLine();
+            endCheck = in.nextLine();
+
+             if(!Objects.equals(endCheck, "Y")) {
+                proceed = false;
+             }
+        }
+
     }
 }
