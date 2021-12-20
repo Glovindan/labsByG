@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class JordanTable {
-    private double[][] tValues;
-    private String[] tRow;
-    private String[] tColumn;
-    private int zeroColumnIndex;
+    public double[][] tValues;
+    public String[] tRow;
+    public String[] tColumn;
+    public int zeroColumnIndex;
 
     JordanTable(double[][] inputValues) {
         this.tValues = new double[inputValues.length][];
@@ -15,6 +15,10 @@ public class JordanTable {
             tValues[row] = inputValues[row].clone();
         }
 
+        this.fillStrokes(inputValues);
+    }
+
+    public void fillStrokes(double[][] inputValues) {
         this.tRow = new String[inputValues[0].length];
         this.tRow[0] = "1";
         for (int column = 1; column < this.tRow.length; column++) {
@@ -109,13 +113,16 @@ public class JordanTable {
             }
         }
 
-        if(Objects.equals(tRow[y], "0")) {
-            for (int row = 0; row < tColumn.length; row++) {
-                swapDoubleItems(newTable[row], y, zeroColumnIndex - 1);
-            }
-            swapStringItems(this.tRow, y, zeroColumnIndex - 1);
-            this.zeroColumnIndex--;
-        }
+        newTable[x][y] = permittedElement;
+
+//        if(Objects.equals(tRow[y], "0")) {
+//            for (int row = 0; row < tColumn.length; row++) {
+//                swapDoubleItems(newTable[row], y, zeroColumnIndex - 1);
+//            }
+//            swapStringItems(this.tRow, y, zeroColumnIndex - 1);
+//            this.zeroColumnIndex--;
+//        }
+
         this.tValues = newTable;
         return true;
     }
