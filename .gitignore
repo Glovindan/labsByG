@@ -1,4 +1,2 @@
-*
-!src
-!.gitignore
-!README.md
+.idea
+out
