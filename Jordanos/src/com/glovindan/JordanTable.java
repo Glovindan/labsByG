@@ -9,7 +9,7 @@ public class JordanTable {
     public String[] tColumn;
     public int zeroColumnIndex;
 
-    JordanTable(double[][] inputValues) {
+    public JordanTable(double[][] inputValues) {
         this.tValues = new double[inputValues.length][];
         for (int row = 0; row < inputValues.length; row++) {
             tValues[row] = inputValues[row].clone();
